@@ -2,7 +2,7 @@ import { Action, combineReducers } from '@ngrx/store';
 import { createFormGroupState, createFormStateReducerWithUpdate, FormGroupState, updateGroup, validate } from 'ngrx-forms';
 import { greaterThan, required } from 'ngrx-forms/validation';
 
-import { State as RootState } from '../app.reducer';
+import { State as RootState } from './login.reducer';
 
 export interface FormValue {
   searchTerm: string;

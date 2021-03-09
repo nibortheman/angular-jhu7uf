@@ -1,23 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { FormGroupState } from 'ngrx-forms';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { select, Store } from "@ngrx/store";
+import { FormGroupState } from "ngrx-forms";
+import { Observable } from "rxjs";
 
-import { FormValue, State } from './async-validation.reducer';
+import { FormValue, State } from "./login.reducer";
 
 @Component({
-  selector: 'ngf-async-validation',
-  templateUrl: './async-validation.component.html',
-  styleUrls: ['./async-validation.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AsyncValidationPageComponent {
+export class LoginComponent {
   formState$: Observable<FormGroupState<FormValue>>;
   searchResults$: Observable<string[]>;
 
   constructor(store: Store<State>) {
     this.formState$ = store.pipe(select(s => s.asyncValidation.formState));
-    this.searchResults$ = store.pipe(select(s => s.asyncValidation.searchResults));
+    this.searchResults$ = store.pipe(
+      select(s => s.asyncValidation.searchResults)
+    );
   }
 }
-© 2021 GitHub, Inc.
