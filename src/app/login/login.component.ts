@@ -37,11 +37,11 @@ export class LoginComponent {
 
     return this.store
       .select(fromReducers.getPassword)
-      .pipe(take(2))
+      .pipe(take(1))
       .pipe(
         map(v => {
           console.log(JSON.stringify(v));
-          return v && !!v.password ? null : { invalidPass: true };
+          return v ? null : { invalidPass: true };
         })
       );
   }

@@ -10,23 +10,13 @@ export class ApplicationService {
   constructor(private http: HttpClient) {}
 
   fakeResponse = [
-    {
-      password: "password"
-    },
-    {
-      password: "password123"
-    }
+    {}
   ];
 
   validatePassword(input: string): Observable<Object> {
     return of(this.fakeResponse).pipe(
       delay(1000),
-      map(passwords => passwords.filter(p => +p.password === +input)),
-      tap(psCodes =>
-        console.log("This is a common password: " + JSON.stringify(psCodes))
-      ),
-      tap(psCodes => console.log("Valid: " + !!psCodes.length)),
-      map(passwords => passwords[0])
+      
     );
   }
 }
