@@ -1,20 +1,21 @@
-<div> 
-<form [formGroup]="form" class="mainlogin" (submit)="onSubmit()">
-  <h1>Login Page</h1>
-  <div>
-    <label for="formControl">Email: </label>
-    <input id="formControl">
-  </div>
-  <p>
-  <div>
-    <label for="formControl">Password: </label>
-    <input type="password" id="formControl" [formControl]="control">
-  </div>
-  <p>
-  <div>
-    <button type="submit" id="formControl" [formControl]="control" [ngClass]="{'error': control?.errors?.invalidPass }">Login</button>
-  </div>
-  <br />
-  <div *ngIf="control?.errors?.invalidPass"> Password must be between 6-20 characters</div>
+<div>
+  <form [formGroup]="form" class="mainlogin" (submit)="onSubmit()">
+    <h1>Login Page</h1>
+    <div>
+      <label for="formControl">Email: </label>
+      <input id="formControl">
+    </div>
+    <p>
+    <div>
+      <label for="formControl">Password: </label>
+      <input type="password" id="formControl" [formControl]="control" [ngClass]="{'error': control?.errors?.invalidPass }">
+    </div>
+    <p>
+    <div>
+      <button type="submit" id="formControl" >Login</button>
+    </div>
+    <br />
+    <!--div *ngIf="control?.errors?.required"> Password must be between 6-20 characters</div-->
+    <small *ngIf="control?.errors?.invalidPass" class="text-danger">Password must be between 6-20 characters</small>
   </form>
 </div>
