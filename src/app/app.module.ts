@@ -30,6 +30,6 @@ import { HttpClientModule } from "@angular/common/http";
     EffectsModule.forRoot([ApplicationEffects])
   ],
   providers: [],
-  bootstrap: [LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -11,15 +11,12 @@ export class ApplicationEffects {
     private applicationService: ApplicationService
   ) {}
 
-  validatePass$ = createEffect(() =>
-    this.actions$.pipe(
+  validatePassword$ = createEffect(() => this.actions$.pipe(
       ofType(ApplicationActions.getPassword),
       switchMap(action =>
-        this.applicationService
-          .validatePassword(action.password)
+        this.applicationService.validatePassword(action.currPassword)
           .pipe(
-            map(password =>
-              ApplicationActions.setPassword({ password: password || {} })
+            map(password => ApplicationActions.setPassword({ password: password || {} })
             )
           )
       )

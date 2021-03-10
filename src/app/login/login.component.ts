@@ -32,7 +32,7 @@ export class LoginComponent {
     this.store.dispatch(ApplicationActions.setPassword({ password: null }));
 
     this.store.dispatch(
-      ApplicationActions.getPassword({ currentpassword: control.value })
+      ApplicationActions.getPassword({ currPassword: control.value })
     );
 
     return this.store
@@ -41,7 +41,7 @@ export class LoginComponent {
       .pipe(
         map(v => {
           console.log(JSON.stringify(v));
-          return v && !!v.mainlogin ? null : { invalidPass: true };
+          return v && !!v.password ? null : { invalidPass: true };
         })
       );
   }

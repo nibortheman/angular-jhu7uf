@@ -22,8 +22,10 @@ export class ApplicationService {
     return of(this.fakeResponse).pipe(
       delay(1000),
       map(passwords => passwords.filter(p => +p.password === +input)),
-      tap(psCodes => console.log("In service " + JSON.stringify(psCodes))),
-      tap(psCodes => console.log("In service " + !!psCodes.length)),
+      tap(psCodes =>
+        console.log("This is a common password: " + JSON.stringify(psCodes))
+      ),
+      tap(psCodes => console.log("Valid: " + !!psCodes.length)),
       map(passwords => passwords[0])
     );
   }

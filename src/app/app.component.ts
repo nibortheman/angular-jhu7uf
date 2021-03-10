@@ -26,14 +26,11 @@ export class AppComponent {
           Validators.maxLength(20)
         ])
       },
-      { updateOn: "submit" }
-    ); // This makes sure it only updates the formControl values on 'blur'
-    // If you need the formControl to update its value on every change then simply removing this altogether works
-    //  as the default value for this is `change`
-    // 'submit' also available
+      { updateOn: "blur" }
+    );
   }
 
-  get password() {
+  get mainlogin() {
     return this.formGroup.get("mainlogin");
   }
 }
