@@ -1,23 +1,34 @@
-import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { ReactiveFormsModule } from "@angular/forms";
-import { FormsModule } from "@angular/forms";
+import { NgModule } from "@angular/core";
+
 import { AppComponent } from "./app.component";
-import { HelloComponent } from "./hello.component";
-import { LoginComponent } from "./login/login.component";
+
 import { StoreModule } from "@ngrx/store";
-import { NgrxFormsModule } from "ngrx-forms";
-import { reducers } from "./login/login.reducer";
+import { LoginComponent } from "./login/login.component";
+import { ROOT_REDUCERS, metaReducers } from "./index.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { ApplicationEffects } from "./application.effects";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-     NgrxFormsModule,
-    StoreModule.forRoot(reducers)
+    HttpClientModule,
+    StoreModule.forRoot(ROOT_REDUCERS, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true
+      }
+    }),
+    EffectsModule.forRoot([ApplicationEffects])
   ],
-  declarations: [AppComponent, HelloComponent, LoginComponent],
   providers: [],
   bootstrap: [LoginComponent]
 })

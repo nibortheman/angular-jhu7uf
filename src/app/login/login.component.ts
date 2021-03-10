@@ -1,17 +1,48 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { FormGroupState } from "ngrx-forms";
-import { Observable } from "rxjs";
-import { AppState, MyFormValue } from "./login.reducer";
+import {
+  FormBuilder,
+  FormControl,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
+//import { Observable } from 'rxjs';
+import { take, map, tap, shareReplay } from "rxjs/operators";
+import * as ApplicationActions from "../application.actions";
+import * as fromReducers from "../index.reducer";
 
 @Component({
   selector: "app-login",
-  templateUrl: "./login.component.html"
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent {
-  formState$: Observable<FormGroupState<MyFormValue>>;
+  @Input() control: FormControl;
 
-  constructor(private store: Store<AppState>) {
-    this.formState$ = store.select(s => s.myForm);
+  constructor(
+    private store: Store<fromReducers.State>,
+    private fb: FormBuilder
+  ) {}
+
+  ngOnInit() {
+    this.control.setAsyncValidators(this.passwordValidator.bind(this));
+  }
+
+  passwordValidator(control: AbstractControl) {
+    this.store.dispatch(ApplicationActions.setPassword({ password: null }));
+
+    this.store.dispatch(
+      ApplicationActions.getPassword({ currentpassword: control.value })
+    );
+
+    return this.store
+      .select(fromReducers.getPassword)
+      .pipe(take(2))
+      .pipe(
+        map(v => {
+          console.log(JSON.stringify(v));
+          return v && !!v.mainlogin ? null : { invalidPass: true };
+        })
+      );
   }
 }
