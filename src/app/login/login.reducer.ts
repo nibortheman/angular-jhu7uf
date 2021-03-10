@@ -1,52 +1,51 @@
-import { Action, combineReducers } from '@ngrx/store';
-import { createFormGroupState, createFormStateReducerWithUpdate, FormGroupState, updateGroup, validate } from 'ngrx-forms';
-import { greaterThan, required } from 'ngrx-forms/validation';
+import { Action } from "@ngrx/store";
+import {
+  FormGroupState,
+  createFormGroupState,
+  formGroupReducer
+} from "ngrx-forms";
 
-import { State as RootState } from './login.reducer';
-
-export interface FormValue {
-  searchTerm: string;
-  numberOfResultsToShow: number;
-}
-
-export interface State extends RootState {
-  asyncValidation: {
-    formState: FormGroupState<FormValue>;
-    searchResults: string[];
+export interface MyFormValue {
+  someTextInput: string;
+  someCheckbox: boolean;
+  nested: {
+    someNumber: number;
   };
 }
 
-export class SetSearchResultAction implements Action {
-  static readonly TYPE = 'asyncValidation/SET_SEARCH_RESULT';
-  readonly type = SetSearchResultAction.TYPE;
-  constructor(public results: string[]) { }
+const FORM_ID = "some globally unique string";
+
+const initialFormState = createFormGroupState<MyFormValue>(FORM_ID, {
+  someTextInput: "",
+  someCheckbox: false,
+  nested: {
+    someNumber: 0
+  }
+});
+
+export interface AppState {
+  someOtherField: string;
+  myForm: FormGroupState<MyFormValue>;
 }
 
-export const FORM_ID = 'asyncValidation';
+const initialState: AppState = {
+  someOtherField: "",
+  myForm: initialFormState
+};
 
-export const INITIAL_STATE = createFormGroupState<FormValue>(FORM_ID, {
-  searchTerm: '',
-  numberOfResultsToShow: 5,
-});
+export function appReducer(state = initialState, action: Action): AppState {
+  const myForm = formGroupReducer(state.myForm, action);
+  if (myForm !== state.myForm) {
+    state = { ...state, myForm };
+  }
 
-const formGroupReducerWithUpdate = createFormStateReducerWithUpdate<FormValue>(updateGroup<FormValue>({
-  searchTerm: validate(required),
-  numberOfResultsToShow: validate(required, greaterThan(0)),
-}));
+  switch (action.type) {
+    case "some action type":
+      // modify state
+      return state;
 
-const reducers = combineReducers<State['asyncValidation']>({
-  formState(s = INITIAL_STATE, a: Action) {
-    return formGroupReducerWithUpdate(s, a);
-  },
-  searchResults(s: string[] = [], a: Action) {
-    if (a.type === SetSearchResultAction.TYPE) {
-      return (a as SetSearchResultAction).results;
+    default: {
+      return state;
     }
-
-    return s;
-  },
-});
-
-export function reducer(s: State['asyncValidation'], a: Action) {
-  return reducers(s, a);
+  }
 }
