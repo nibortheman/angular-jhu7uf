@@ -1,4 +1,5 @@
-<div class="mainlogin">
+<div> 
+<form [formGroup]="form" class="mainlogin" (submit)="onSubmit()">
   <h1>Login Page</h1>
   <div>
     <label for="formControl">Email: </label>
@@ -11,8 +12,9 @@
   </div>
   <p>
   <div>
-    <button id="formControl" [formControl]="control" [ngClass]="{'error': control?.errors?.invalidPass }">Login</button>
+    <button type="submit" id="formControl" [formControl]="control" [ngClass]="{'error': control?.errors?.invalidPass }">Login</button>
   </div>
   <br />
   <div *ngIf="control?.errors?.invalidPass"> Password must be between 6-20 characters</div>
+  </form>
 </div>
