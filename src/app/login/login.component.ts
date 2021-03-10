@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { FormGroupState } from "ngrx-forms";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { AppState, MyFormValue } from "./login.reducer";
 
 @Component({
