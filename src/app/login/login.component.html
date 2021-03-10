@@ -3,12 +3,12 @@
     <h1>Login Page</h1>
     <div>
       <label for="formControl">Email: </label>
-      <input id="formControl">
+      <input type="email" id="formControl" [formControl]="control" [ngClass]="{'error': control?.errors.invalidEmail}">
     </div>
     <p>
     <div>
       <label for="formControl">Password: </label>
-      <input type="password" id="formControl" [formControl]="control" [ngClass]="{'error': control?.errors?.invalidPass }">
+      <input type="password" maxlength="20" id="formControl" [formControl]="control" [ngClass]="{'error': control?.errors.invalidPass}">
     </div>
     <p>
     <div>

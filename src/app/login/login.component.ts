@@ -10,6 +10,7 @@ import {
 import { take, map, tap, shareReplay } from "rxjs/operators";
 import * as ApplicationActions from "../application.actions";
 import * as fromReducers from "../index.reducer";
+import { isNull } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-login",
@@ -41,7 +42,7 @@ export class LoginComponent {
       .pipe(
         map(v => {
           console.log(JSON.stringify(v));
-          return v ? null : { invalidPass: true };
+          return v ? this.passwordValidator : { invalidPass: true };
         })
       );
   }

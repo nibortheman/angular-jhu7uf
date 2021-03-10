@@ -22,7 +22,8 @@ export class AppComponent {
       {
         mainlogin: new FormControl("", [
           Validators.required,
-          Validators.pattern("[a-z0-9]{6,20}")
+          Validators.maxLength(5),
+          Validators.minLength(0)
         ])
       },
       { updateOn: "submit" }
